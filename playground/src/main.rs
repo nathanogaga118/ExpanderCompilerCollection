@@ -11,15 +11,32 @@ declare_circuit!(ExampleCircuit {
     p1_poly: [Variable; 4],
 });
 
+fn custom_gate(
+    builder: &mut API<BN254Config>,
+    a: &Variable,
+    b: &Variable,
+    c: &Variable,
+    d: &Variable,
+) -> Variable {
+    let t1 = builder.mul(a, b);
+    let t2 = builder.mul(c, d);
+    builder.add(&t1, &t2)
+}
+
 impl Define<BN254Config> for ExampleCircuit<Variable> {
     fn define(&self, builder: &mut API<BN254Config>) {
         let mut p2 = vec![];
         let mut p1_poly_in_circuit = vec![];
         for i in 0..8 {
             let other_index = if i & 1 == 0 { i + 1 } else { i - 1 };
-            let t1 = builder.mul(&self.p3_poly[i], &self.q3_poly[other_index]);
-            let t2 = builder.mul(&self.p3_poly[other_index], &self.q3_poly[i]);
-            p2.push(builder.add(&t1, &t2));
+            let res = custom_gate(
+                builder,
+                &self.p3_poly[i],
+                &self.q3_poly[other_index],
+                &self.p3_poly[other_index],
+                &self.q3_poly[i],
+            );
+            p2.push(res);
         }
 
         p1_poly_in_circuit.push(builder.add(&p2[0], &p2[2]));
