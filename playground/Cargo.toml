@@ -1,0 +1,12 @@
+[package]
+name = "playground"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ark-std.workspace = true
+halo2curves.workspace = true
+rand.workspace = true
+
+circuit-std-rs = { path = "../circuit-std-rs" }
+expander_compiler = { path = "../expander_compiler" }
