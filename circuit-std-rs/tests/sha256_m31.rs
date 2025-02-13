@@ -1,5 +1,5 @@
 use circuit_std_rs::{sha256::m31::sha256_37bytes, sha256::m31_utils::to_binary_hint};
-use expander_compiler::frontend::*;
+use expander_compiler::frontend::{internal::DumpLoadTwoVariables, *};
 use extra::*;
 use sha2::{Digest, Sha256};
 
@@ -34,8 +34,12 @@ impl GenericDefine<M31Config> for SHA25637BYTESCircuit<Variable> {
 fn test_sha256_37bytes() {
     let mut hint_registry = HintRegistry::<M31>::new();
     hint_registry.register("myhint.tobinary", to_binary_hint);
+    let circuit = SHA25637BYTESCircuit::default();
     let compile_result =
-        compile_generic(&SHA25637BYTESCircuit::default(), CompileOptions::default()).unwrap();
+        compile_generic(&circuit, CompileOptions::default()).unwrap();
+    eprintln!("{}",
+    compile_result.layered_circuit
+      );
     for i in 0..1 {
         let data = [i; 37];
         let mut hash = Sha256::new();
