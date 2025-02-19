@@ -19,7 +19,7 @@ tiny-keccak = { version = "2.0", features = ["keccak"] }
 halo2curves = { git = "https://github.com/PolyhedraZK/halo2curves", default-features = false, features = [
     "bits",
 ] }
-arith = { git = "https://github.com/PolyhedraZK/Expander", branch = "dev" }
+arith = { git = "https://github.com/PolyhedraZK/Expander", branch = "main" }
 mpi_config = { git = "https://github.com/PolyhedraZK/Expander", branch = "dev" }
 gkr_field_config = { git = "https://github.com/PolyhedraZK/Expander", branch = "dev" }
 expander_config = { git = "https://github.com/PolyhedraZK/Expander", branch = "dev", package = "config" }
